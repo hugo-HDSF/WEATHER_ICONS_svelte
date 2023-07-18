@@ -53,7 +53,7 @@
 
 ## About The Project
 
-<img src="public/images/exemple.png" alt="Weather Interface">
+![Screen Shot](public/images/exemple.png)
 
 
 This App is a clone of the Apple weather application. The objective of this project is to reproduce the interface of the Apple weather application. The data is provided by the [OpenWeatherMap](https://openweathermap.org/) API.
