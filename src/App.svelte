@@ -1,8 +1,8 @@
 <script lang="ts">
 
+    //selected city
     import {onMount} from 'svelte';
 
-    //selected city
     let cityOptions = [];
     let inputCityName = '';
 
@@ -22,8 +22,28 @@
         }
     });
 
-    //weather conditions
+    // city selection
+    let city;
 
+    //fetch weather data when the selected city changes
+    $: {
+        city = cityOptions.find(option => option.value === inputCityName);
+        if (city) {
+            fetchWeatherData(city);
+        }
+    }
+
+    //date formatting for ->
+    // - current weather
+    const current_weather_fulldate_option = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    // - forecast weekday
+    const forecast_weather_weekday_option = {weekday: 'short'};
+    // - forecast 3h hour
+    const forecast3h_weather_time_option = {hour: 'numeric', hour12: false };
+    // - forecast day/month
+    const forecast3h_weather_date_options = {day: 'numeric', month: 'numeric'};
+
+    //weather conditions
     import {writable} from 'svelte/store';
 
     //loading state
@@ -114,41 +134,11 @@
             loading = false;
             currentWeatherData = currentWeatherData.list;
             forecastWeatherData = forecastWeatherData.list;
-
-            console.log('Weather data fetched successfully');
-
-            //console.log('Current weather data:', currentData);
-            console.log('Forecast weather data:', forecastWeatherData);
-
-            //console.log('Current weather mapped:', current);
-            //console.log('Forecasts weather mapped:', forecasts);
-
         } catch
             (error) {
             console.error('Error fetching weather data:', error);
         }
     }
-
-    // city selection
-    let city;
-
-    //fetch weather data when the selected city changes
-    $: {
-        city = cityOptions.find(option => option.value === inputCityName);
-        if (city) {
-            fetchWeatherData(city);
-        }
-    }
-
-    //date formatting for ->
-    // - current weather
-    const current_weather_fulldate_option = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    // - forecast weekday
-    const forecast_weather_weekday_option = {weekday: 'short'};
-    // - forecast 3h hour
-    const forecast3h_weather_time_option = {hour: 'numeric', hour12: false };
-    // - forecast day/month
-    const forecast3h_weather_date_options = {day: 'numeric', month: 'numeric'};
 
 </script>
 
